@@ -55,6 +55,20 @@ namespace GestioneOrdini.Gui.ViewModel
             }
         }
 
+        private string _telefono;
+        public string Telefono
+        {
+            get
+            {
+                return _telefono;
+            }
+            set
+            {
+                _telefono = value;
+                RaisePropertyChanged("Telefono");
+            }
+        }
+
         private DateTime _dataOrdine;
         public DateTime DataOrdine
         {
@@ -92,6 +106,7 @@ namespace GestioneOrdini.Gui.ViewModel
             Descrizione = string.Empty;
             DataOrdine = DateTime.Now;
             Stato = 1;
+            Telefono = string.Empty;
         }
 
         private void Cancel()
@@ -101,14 +116,15 @@ namespace GestioneOrdini.Gui.ViewModel
 
         private void Add()
         {
-            MessengerInstance.Send(new AddRigaMessage(AddRigaMessage.AddMessage, new RigaOrdine()
+            MessengerInstance.Send(new AddRigaMessage(AddRigaMessage.AddMessage, new RigaOrdine
                                                                   {
-                                                                    Id = -1,
+                                                                    Id = 100,
                                                                     Cliente = Cliente,
                                                                     Descrizione = Descrizione,
                                                                     DataOrdine = DataOrdine,
                                                                     Stato = Stato,
-                                                                    Marca = Marca
+                                                                    Marca = Marca,
+                                                                    Telefono = Telefono
                                                                   }));
         }
 

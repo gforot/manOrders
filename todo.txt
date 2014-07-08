@@ -1,0 +1,3 @@
+- path del db relativo.
+- inserimento righe ordine
+- aggiunta di modalità per aggiornare riga

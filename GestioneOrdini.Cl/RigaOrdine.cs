@@ -6,11 +6,14 @@ namespace GestioneOrdini.Cl
     [Table(Name="RigheOrdine")]
     public class RigaOrdine
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
         [Column(Name = "Cliente")]
         public string Cliente { get; set; }
+
+        [Column(Name = "Telefono")]
+        public string Telefono { get; set; }
 
         [Column(Name = "Descrizione")]
         public string Descrizione { get; set; }

@@ -1,9 +1,14 @@
 ﻿<Window x:Class="GestioneOrdini.Gui.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:GestioneOrdini.Gui.Converters"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
+
+        <converters:AvvisatoConverter x:Key="avvisatoConverter" />
+        <converters:DatetimeToDateConverter x:Key="datetimeToDateConverter" />
+        
         <Style TargetType="TextBlock" x:Key="titleStyle">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="30" />
@@ -18,7 +23,7 @@
             <TextBlock Text="{Binding AppTitle}" Style="{StaticResource titleStyle}"></TextBlock>
         </StackPanel>
         <StackPanel x:Name="lbPanel">
-            <DataGrid ItemsSource="{Binding RigheOrdine}">
+            <DataGrid ItemsSource="{Binding RigheOrdine}" AutoGenerateColumns="False">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -31,6 +36,19 @@
                         </Style.Triggers>
                     </Style>
                 </DataGrid.RowStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Cliente" Binding="{Binding Cliente}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Descrizione" Binding="{Binding Descrizione}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Marca" Binding="{Binding Marca}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Tel" Binding="{Binding Telefono}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Data Ordine" Binding="{Binding DataOrdine, Converter={StaticResource datetimeToDateConverter}}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Data Avviso" Binding="{Binding DataAvvisato, Converter={StaticResource datetimeToDateConverter}}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Data Arrivo Pezzo" Binding="{Binding DataArrivoPezzo, Converter={StaticResource datetimeToDateConverter}}"></DataGridTextColumn>
+                    
+                    <DataGridCheckBoxColumn Header="Avvisato" IsThreeState="False" Binding="{Binding Avvisato, Converter={StaticResource avvisatoConverter}}" />
+                    
+                </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
         <StackPanel x:Name="buttonsPanel">
