@@ -74,7 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="db\GestioneOrdini.db3" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

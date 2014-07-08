@@ -9,7 +9,8 @@ namespace GestioneOrdini.Cl
 {
     public class GestOrdiniDataContext : DataContext
     {
-        private const string _dbPath = @"C:\Users\arota\Documents\Personali\sw\GestioneOrdinis\GestioneOrdini.Cl\db\GestioneOrdini.db3";
+        //private const string _dbPath = @"C:\Users\arota\Documents\Personali\sw\GestioneOrdinis\GestioneOrdini.Cl\db\GestioneOrdini.db3";
+        private const string _dbPath = @"db\GestioneOrdini.db3";
         public Table<RigaOrdine> RigheOrdine;
 
         public GestOrdiniDataContext()
