@@ -1,0 +1,42 @@
+﻿<Window x:Class="GestioneOrdini.Gui.AddRigaOrdineWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        DataContext="{Binding AddRigaOrdine, Source={StaticResource Locator}}"
+        Title="AddRigaOrdineWindow" Height="300" Width="300">
+    <StackPanel>
+        <Grid>
+        <Grid.Resources>
+            <Style TargetType="FrameworkElement">
+                <Setter Property="Margin" Value="50"></Setter>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Cliente" Grid.Row="0" Grid.Column="0" />
+        <TextBlock Text="Descrizione" Grid.Column="0" Grid.Row="1" />
+        <TextBlock Text="DataOrdine" Grid.Column="0" Grid.Row="2" />
+        <TextBlock Text="Stato" Grid.Column="0" Grid.Row="3" />
+        <TextBlock Text="Marca" Grid.Column="0" Grid.Row="4" />
+
+        <TextBox Text="{Binding Cliente}" Grid.Row="0" Grid.Column="1" />
+        <TextBox Text="{Binding Descrizione}" Grid.Column="1" Grid.Row="1"/>
+        <DatePicker Grid.Column="1" Grid.Row="2" DisplayDate="{Binding DataOrdine}" />
+        <TextBox Text="{Binding Stato}" Grid.Column="1" Grid.Row="3" />
+        <TextBox Text="{Binding Marca}" Grid.Column="1" Grid.Row="4" />
+    </Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Cancel" Command="{Binding CancelCommand}" />
+            <Button Content="Add" Command="{Binding AddCommand}" />
+        </StackPanel>
+    </StackPanel>
+</Window>
