@@ -67,15 +67,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddMarcaWindow.xaml.cs">
+      <DependentUpon>AddMarcaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddRigaOrdineWindow.xaml.cs">
       <DependentUpon>AddRigaOrdineWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\AvvisatoConverter.cs" />
     <Compile Include="Converters\DatetimeToDateConverter.cs" />
+    <Compile Include="Messages\AddMarcheMessage.cs" />
     <Compile Include="Messages\AddRigaMessage.cs" />
+    <Compile Include="ViewModel\AddMarcaViewModel.cs" />
     <Compile Include="ViewModel\AddRigaOrdineViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="AddMarcaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddRigaOrdineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

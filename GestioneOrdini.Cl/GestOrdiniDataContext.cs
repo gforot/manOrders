@@ -12,6 +12,7 @@ namespace GestioneOrdini.Cl
         //private const string _dbPath = @"C:\Users\arota\Documents\Personali\sw\GestioneOrdinis\GestioneOrdini.Cl\db\GestioneOrdini.db3";
         private const string _dbPath = @"db\GestioneOrdini.db3";
         public Table<RigaOrdine> RigheOrdine;
+        public Table<Marca> Marche;
 
         public GestOrdiniDataContext()
             : this(new SQLiteConnection(string.Format("Data Source={0}", _dbPath)))
@@ -29,7 +30,7 @@ namespace GestioneOrdini.Cl
         {
             try
             {
-                ro.Id = GetNextId();
+                ro.Id = GetRigheOrdineNextId();
                 this.RigheOrdine.InsertOnSubmit(ro);
                 this.SubmitChanges();
                 return true;
@@ -40,7 +41,7 @@ namespace GestioneOrdini.Cl
             }
         }
 
-        private int GetNextId()
+        private int GetRigheOrdineNextId()
         {
             List<RigaOrdine> rords = this.GetRigheOrdine();
             if (rords.Count == 0)
@@ -77,6 +78,36 @@ namespace GestioneOrdini.Cl
             {
                 return false;
             }
+        }
+
+        public List<Marca> GetMarche()
+        {
+            return new List<Marca>(Marche);
+        }
+
+        public bool AddMarca(Marca m)
+        {
+            try
+            {
+                m.Id = GetMarcheNextId();
+                this.Marche.InsertOnSubmit(m);
+                this.SubmitChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private int GetMarcheNextId()
+        {
+            List<Marca> rords = this.GetMarche();
+            if (rords.Count == 0)
+            {
+                return 1;
+            }
+            return rords.Max(rord => rord.Id) + 1;
         }
     }
 }

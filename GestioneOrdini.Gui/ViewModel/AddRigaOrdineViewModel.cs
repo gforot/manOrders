@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Documents;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GestioneOrdini.Cl;
@@ -28,8 +31,8 @@ namespace GestioneOrdini.Gui.ViewModel
             }
         }
 
-        private string _marca;
-        public string Marca
+        private Marca _marca;
+        public Marca Marca
         {
             get
             {
@@ -41,6 +44,8 @@ namespace GestioneOrdini.Gui.ViewModel
                 RaisePropertyChanged("Marca");
             }
         }
+
+        public List<Marca> Marche { get; set; }
 
 
         private string _descrizione;
@@ -107,10 +112,15 @@ namespace GestioneOrdini.Gui.ViewModel
 
         public void Setup()
         {
+            using (GestOrdiniDataContext db = new GestOrdiniDataContext())
+            {
+                Marche = db.GetMarche();
+            }
+
             if (GestioneOrdini.Gui.App.CurrentRigaOrdine == null)
             {
                 Cliente = string.Empty;
-                Marca = string.Empty;
+                Marca = null;
                 Descrizione = string.Empty;
                 DataOrdine = DateTime.Now;
                 Stato = 1;
@@ -119,14 +129,16 @@ namespace GestioneOrdini.Gui.ViewModel
             }
             else
             {
+                Marca = Marche.First(m => m.Nome.Equals(App.CurrentRigaOrdine.Marca));
                 Cliente = App.CurrentRigaOrdine.Cliente;
-                Marca = App.CurrentRigaOrdine.Marca;
                 Descrizione = App.CurrentRigaOrdine.Descrizione;
                 DataOrdine = App.CurrentRigaOrdine.DataOrdine;
                 Stato = App.CurrentRigaOrdine.Stato;
                 Telefono = App.CurrentRigaOrdine.Telefono;
                 _id = App.CurrentRigaOrdine.Id;
             }
+
+
         }
 
         private void Cancel()
@@ -143,12 +155,9 @@ namespace GestioneOrdini.Gui.ViewModel
                                                                     Descrizione = Descrizione,
                                                                     DataOrdine = DataOrdine,
                                                                     Stato = Stato,
-                                                                    Marca = Marca,
+                                                                    Marca = Marca.Nome,
                                                                     Telefono = Telefono,
                                                                   }));
-
-
-
         }
 
     }

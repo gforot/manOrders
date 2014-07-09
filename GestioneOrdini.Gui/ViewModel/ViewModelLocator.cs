@@ -44,6 +44,7 @@ namespace GestioneOrdini.Gui.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<AddRigaOrdineViewModel>();
+            SimpleIoc.Default.Register<AddMarcaViewModel>();
         }
 
         public MainViewModel Main
@@ -59,6 +60,14 @@ namespace GestioneOrdini.Gui.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<AddRigaOrdineViewModel>();
+            }
+        }
+
+        public AddMarcaViewModel AddMarca
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AddMarcaViewModel>();
             }
         }
         

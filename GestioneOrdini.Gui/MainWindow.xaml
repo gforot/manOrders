@@ -59,8 +59,9 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-        <StackPanel x:Name="buttonsPanel">
+        <StackPanel x:Name="buttonsPanel" Orientation="Horizontal">
             <Button x:Name="addOrdine" Content="Nuovo" Command="{Binding AddCommand}" Style="{StaticResource btnStyle}"></Button>
+            <Button x:Name="addMarche" Content="Aggiungi Marche" Command="{Binding AddMarcheCommand}" Style="{StaticResource btnStyle}"></Button>
         </StackPanel>
     </StackPanel>
 </Window>

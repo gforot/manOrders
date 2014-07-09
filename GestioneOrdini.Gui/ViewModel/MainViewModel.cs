@@ -25,6 +25,7 @@ namespace GestioneOrdini.Gui.ViewModel
     {
         public RelayCommand AddCommand { get; private set; }
         public RelayCommand UpdateCommand { get; private set; }
+        public RelayCommand AddMarcheCommand { get; private set; }
 
         public string AppTitle
         {   
@@ -45,6 +46,7 @@ namespace GestioneOrdini.Gui.ViewModel
         {
             AddCommand = new RelayCommand(Add);
             UpdateCommand = new RelayCommand(Update);
+            AddMarcheCommand = new RelayCommand(AddMarche);
 
             //RigheOrdine = TestDataGenerator.CreateTestRigheOrdine();
             using (GestOrdiniDataContext db = new GestOrdiniDataContext())
@@ -96,6 +98,25 @@ namespace GestioneOrdini.Gui.ViewModel
                     if (isOk)
                     {
                         UpdateRigheOrdineFromDb(db);
+                    }
+                }
+            }
+        }
+
+        private void AddMarche()
+        {
+            AddMarcaWindow wnd = new AddMarcaWindow();
+            wnd.ShowDialog();
+
+            if (wnd.Marche != null)
+            {
+                using (GestOrdiniDataContext db = new GestOrdiniDataContext())
+                {
+                    string[] marche = wnd.Marche.Split(new[] {';'});
+
+                    foreach (var marca in marche)
+                    {
+                        db.AddMarca(new Marca() {Nome = marca});
                     }
                 }
             }
