@@ -23,7 +23,7 @@
             <TextBlock Text="{Binding AppTitle}" Style="{StaticResource titleStyle}"></TextBlock>
         </StackPanel>
         <StackPanel x:Name="lbPanel">
-            <DataGrid ItemsSource="{Binding RigheOrdine}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}">
+            <DataGrid ItemsSource="{Binding RigheOrdine}" CanUserAddRows="False" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -58,6 +58,26 @@
                                 <Button Command="{Binding Path=DataContext.UpdateCommand,       
  RelativeSource= {RelativeSource FindAncestor,
   AncestorType={x:Type DataGrid}}}">Aggiorna</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding Path=DataContext.AvvisatoCommand,       
+ RelativeSource= {RelativeSource FindAncestor,
+  AncestorType={x:Type DataGrid}}}">Avvisato</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding Path=DataContext.RitiratoCommand,       
+ RelativeSource= {RelativeSource FindAncestor,
+  AncestorType={x:Type DataGrid}}}">Ritirato</Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

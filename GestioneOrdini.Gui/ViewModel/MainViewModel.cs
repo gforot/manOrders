@@ -25,6 +25,8 @@ namespace GestioneOrdini.Gui.ViewModel
     {
         public RelayCommand AddCommand { get; private set; }
         public RelayCommand UpdateCommand { get; private set; }
+        public RelayCommand RitiratoCommand { get; private set; }
+        public RelayCommand AvvisatoCommand { get; private set; }
         public RelayCommand AddMarcheCommand { get; private set; }
 
         public string AppTitle
@@ -46,6 +48,8 @@ namespace GestioneOrdini.Gui.ViewModel
         {
             AddCommand = new RelayCommand(Add);
             UpdateCommand = new RelayCommand(Update);
+            RitiratoCommand = new RelayCommand(Ritirato);
+            AvvisatoCommand = new RelayCommand(Avvisato);
             AddMarcheCommand = new RelayCommand(AddMarche);
 
             //RigheOrdine = TestDataGenerator.CreateTestRigheOrdine();
@@ -77,6 +81,79 @@ namespace GestioneOrdini.Gui.ViewModel
                     }
                 }
             }
+        }
+
+        private void Ritirato() 
+        {
+            if (SelectedItem == null) return;
+            if (SelectedItem is RigaOrdine)
+            {
+                RigaOrdine ro = SelectedItem as RigaOrdine;
+
+                using (GestOrdiniDataContext db = new GestOrdiniDataContext())
+                {
+                    RigaOrdine roInDb = db.GetRigaOrdine(ro.Id);
+                    if (roInDb != null)
+                    {
+                        //ho trovato la riga nel db. La aggiorno.
+                        roInDb.Ritirato = 1;
+                        roInDb.DataRitirato = System.DateTime.Now;
+
+                        bool res = db.UpdateRigaOrdine(roInDb);
+                        if (res)
+                        {
+                            db.SubmitChanges();
+                            UpdateRigheOrdineFromDb(db);
+                        }
+                        else
+                        {
+
+                        }
+                    }
+
+
+                }
+
+            }
+
+
+        }
+
+
+        private void Avvisato()
+        {
+            if (SelectedItem == null) return;
+            if (SelectedItem is RigaOrdine)
+            {
+                RigaOrdine ro = SelectedItem as RigaOrdine;
+
+                using (GestOrdiniDataContext db = new GestOrdiniDataContext())
+                {
+                    RigaOrdine roInDb = db.GetRigaOrdine(ro.Id);
+                    if (roInDb != null)
+                    {
+                        //ho trovato la riga nel db. La aggiorno.
+                        roInDb.Avvisato = 1;
+                        roInDb.DataAvvisato = System.DateTime.Now;
+
+                        bool res = db.UpdateRigaOrdine(roInDb);
+                        if (res)
+                        {
+                            db.SubmitChanges();
+                            UpdateRigheOrdineFromDb(db);
+                        }
+                        else
+                        {
+
+                        }
+                    }
+
+
+                }
+
+            }
+
+
         }
 
         private void Add()

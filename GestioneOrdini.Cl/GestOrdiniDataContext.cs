@@ -53,7 +53,13 @@ namespace GestioneOrdini.Cl
 
         public RigaOrdine GetRigaOrdine(int id)
         {
-            return RigheOrdine.First(r => r.Id == id);
+            foreach (RigaOrdine ro in RigheOrdine)
+            {
+                if (ro.Id == id) return ro;
+            }
+
+
+            return null;
         }
 
         public List<RigaOrdine> GetRigheOrdine()
