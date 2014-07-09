@@ -16,7 +16,6 @@ namespace GestioneOrdini.Gui
         public AddRigaOrdineWindow()
         {
             InitializeComponent();
-            RigaOrdine = null;
             Messenger.Default.Register<AddRigaMessage>(this, HandleAddRigaMessage);
         }
 
@@ -35,6 +34,7 @@ namespace GestioneOrdini.Gui
 
         private void Cancel()
         {
+            RigaOrdine = null;
             this.Close();
         }
 

@@ -4,6 +4,7 @@ using System.Windows.Documents;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GestioneOrdini.Cl;
+using Microsoft.Practices.ServiceLocation;
 
 
 namespace GestioneOrdini.Gui.ViewModel
@@ -54,11 +55,35 @@ namespace GestioneOrdini.Gui.ViewModel
 
         private void Update()
         {
-            
+            GestioneOrdini.Gui.App.CurrentRigaOrdine = SelectedItem as RigaOrdine;
+            GestioneOrdini.Gui.App.CurrentRigaOrdineId = (SelectedItem as RigaOrdine).Id;
+
+            ServiceLocator.Current.GetInstance<AddRigaOrdineViewModel>().Setup();
+
+            AddRigaOrdineWindow wnd = new AddRigaOrdineWindow();
+            wnd.ShowDialog();
+
+            if (wnd.RigaOrdine != null)
+            {
+                using (GestOrdiniDataContext db = new GestOrdiniDataContext())
+                {
+                    bool isOk = db.UpdateRigaOrdine(wnd.RigaOrdine);
+                    //se la aggiunta va a buon fine aggiorno
+                    if (isOk)
+                    {
+                        UpdateRigheOrdineFromDb(db);
+                    }
+                }
+            }
         }
 
         private void Add()
         {
+            GestioneOrdini.Gui.App.CurrentRigaOrdine = null;
+            GestioneOrdini.Gui.App.CurrentRigaOrdineId = null;
+
+            ServiceLocator.Current.GetInstance<AddRigaOrdineViewModel>().Setup();
+
             AddRigaOrdineWindow wnd = new AddRigaOrdineWindow();
             wnd.ShowDialog();
 

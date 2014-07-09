@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using GestioneOrdini.Cl;
+
 
 namespace GestioneOrdini.Gui
 {
@@ -13,5 +15,7 @@ namespace GestioneOrdini.Gui
     /// </summary>
     public partial class App : Application
     {
+        public static RigaOrdine CurrentRigaOrdine { get; set; }
+        public static int? CurrentRigaOrdineId { get; set; }
     }
 }

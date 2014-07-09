@@ -59,5 +59,24 @@ namespace GestioneOrdini.Cl
         {
             return new List<RigaOrdine>(RigheOrdine);
         }
+
+        public bool UpdateRigaOrdine(RigaOrdine rigaOrdine)
+        {
+            try
+            {
+                //recupero la riga da aggiornare
+                RigaOrdine original = RigheOrdine.Single(ro => ro.Id == rigaOrdine.Id);
+                if (original == null)
+                {
+                    return false;
+                }
+                original.CopyAllProperties(rigaOrdine);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

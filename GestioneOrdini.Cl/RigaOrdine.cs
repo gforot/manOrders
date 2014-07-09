@@ -35,6 +35,19 @@ namespace GestioneOrdini.Cl
 
         [Column(Name = "DataAvvisato")]
         public DateTime? DataAvvisato { get; set; }
+
+        public void CopyAllProperties(RigaOrdine source)
+        {
+            Avvisato = source.Avvisato;
+            Cliente = source.Cliente;
+            Telefono = source.Telefono;
+            Descrizione = source.Descrizione;
+            Marca = source.Marca;
+            DataOrdine = source.DataOrdine;
+            DataArrivoPezzo = source.DataArrivoPezzo;
+            Stato = source.Stato;
+            DataAvvisato = source.DataAvvisato;
+        }
     }
 
 }

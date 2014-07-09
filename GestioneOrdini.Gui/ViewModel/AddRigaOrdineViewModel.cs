@@ -12,6 +12,8 @@ namespace GestioneOrdini.Gui.ViewModel
         public RelayCommand AddCommand { get; private set; }
         public RelayCommand CancelCommand { get; private set; }
 
+        private int _id;
+
         private string _cliente;
         public string Cliente
         {
@@ -69,8 +71,8 @@ namespace GestioneOrdini.Gui.ViewModel
             }
         }
 
-        private DateTime _dataOrdine;
-        public DateTime DataOrdine
+        private DateTime? _dataOrdine;
+        public DateTime? DataOrdine
         {
             get
             {
@@ -101,12 +103,30 @@ namespace GestioneOrdini.Gui.ViewModel
         {
             AddCommand = new RelayCommand(Add);
             CancelCommand = new RelayCommand(Cancel);
-            Cliente = string.Empty;
-            Marca = string.Empty;
-            Descrizione = string.Empty;
-            DataOrdine = DateTime.Now;
-            Stato = 1;
-            Telefono = string.Empty;
+        }
+
+        public void Setup()
+        {
+            if (GestioneOrdini.Gui.App.CurrentRigaOrdine == null)
+            {
+                Cliente = string.Empty;
+                Marca = string.Empty;
+                Descrizione = string.Empty;
+                DataOrdine = DateTime.Now;
+                Stato = 1;
+                Telefono = string.Empty;
+                _id = -1;
+            }
+            else
+            {
+                Cliente = App.CurrentRigaOrdine.Cliente;
+                Marca = App.CurrentRigaOrdine.Marca;
+                Descrizione = App.CurrentRigaOrdine.Descrizione;
+                DataOrdine = App.CurrentRigaOrdine.DataOrdine;
+                Stato = App.CurrentRigaOrdine.Stato;
+                Telefono = App.CurrentRigaOrdine.Telefono;
+                _id = App.CurrentRigaOrdine.Id;
+            }
         }
 
         private void Cancel()
@@ -118,6 +138,7 @@ namespace GestioneOrdini.Gui.ViewModel
         {
             MessengerInstance.Send(new AddRigaMessage(AddRigaMessage.AddMessage, new RigaOrdine
                                                                   {
+                                                                    Id = _id,
                                                                     Cliente = Cliente,
                                                                     Descrizione = Descrizione,
                                                                     DataOrdine = DataOrdine,
