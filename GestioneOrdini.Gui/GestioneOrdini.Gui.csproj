@@ -73,8 +73,8 @@
     <Compile Include="AddRigaOrdineWindow.xaml.cs">
       <DependentUpon>AddRigaOrdineWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\AvvisatoConverter.cs" />
     <Compile Include="Converters\DatetimeToDateConverter.cs" />
+    <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Messages\AddMarcheMessage.cs" />
     <Compile Include="Messages\AddRigaMessage.cs" />
     <Compile Include="ViewModel\AddMarcaViewModel.cs" />

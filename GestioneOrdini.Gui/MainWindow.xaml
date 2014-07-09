@@ -6,16 +6,19 @@
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
 
-        <converters:AvvisatoConverter x:Key="avvisatoConverter" />
+
         <converters:DatetimeToDateConverter x:Key="datetimeToDateConverter" />
+        <converters:IntToBoolConverter x:Key="intToBoolConverter" />
         
         <Style TargetType="TextBlock" x:Key="titleStyle">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="30" />
+            <Setter Property="Margin" Value="5" />
         </Style>
 
         <Style TargetType="Button" x:Key="btnStyle">
             <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="5" />
         </Style>
     </Window.Resources>
     <StackPanel>
@@ -27,10 +30,10 @@
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Stato}" Value="2">
-                                <Setter Property="Background" Value="Red"></Setter>
+                            <DataTrigger Binding="{Binding Avvisato}" Value="1">
+                                <Setter Property="Background" Value="Yellow"></Setter>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Stato}" Value="3">
+                            <DataTrigger Binding="{Binding Ritirato}" Value="1">
                                 <Setter Property="Background" Value="Green"></Setter>
                             </DataTrigger>
                         </Style.Triggers>
@@ -44,11 +47,11 @@
                     <DataGridTextColumn Header="Marca" Binding="{Binding Marca}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Tel" Binding="{Binding Telefono}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Data Ordine" Binding="{Binding DataOrdine, Converter={StaticResource datetimeToDateConverter}}" IsReadOnly="True" />
-                    <DataGridCheckBoxColumn Header="Avvisato" IsThreeState="False" Binding="{Binding Avvisato, Converter={StaticResource avvisatoConverter}}" IsReadOnly="True" />
+                    <DataGridCheckBoxColumn Header="Avvisato" IsThreeState="False" Binding="{Binding Avvisato, Converter={StaticResource intToBoolConverter}}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Data Avviso" Binding="{Binding DataAvvisato, Converter={StaticResource datetimeToDateConverter}}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Data Arrivo Pezzo" Binding="{Binding DataArrivoPezzo, Converter={StaticResource datetimeToDateConverter}}" IsReadOnly="True" />
 
-                    <DataGridCheckBoxColumn Header="Ritirato" IsThreeState="False" Binding="{Binding Ritirato, Converter={StaticResource avvisatoConverter}}" IsReadOnly="True" />
+                    <DataGridCheckBoxColumn Header="Ritirato" IsThreeState="False" Binding="{Binding Ritirato, Converter={StaticResource intToBoolConverter}}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Data Ritirato" Binding="{Binding DataRitirato, Converter={StaticResource datetimeToDateConverter}}" IsReadOnly="True" />
 
 
@@ -87,6 +90,8 @@
         <StackPanel x:Name="buttonsPanel" Orientation="Horizontal">
             <Button x:Name="addOrdine" Content="Nuovo" Command="{Binding AddCommand}" Style="{StaticResource btnStyle}"></Button>
             <Button x:Name="addMarche" Content="Aggiungi Marche" Command="{Binding AddMarcheCommand}" Style="{StaticResource btnStyle}"></Button>
+            <Button x:Name="filtra" Content="Filtra" Command="{Binding FilterCommand}" Style="{StaticResource btnStyle}"></Button>
+            <Button x:Name="annukllafiltra" Content="Annulla Filtro" Command="{Binding CancelFilterCommand}" Style="{StaticResource btnStyle}"></Button>
         </StackPanel>
     </StackPanel>
 </Window>

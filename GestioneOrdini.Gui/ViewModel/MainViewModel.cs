@@ -28,6 +28,8 @@ namespace GestioneOrdini.Gui.ViewModel
         public RelayCommand RitiratoCommand { get; private set; }
         public RelayCommand AvvisatoCommand { get; private set; }
         public RelayCommand AddMarcheCommand { get; private set; }
+        public RelayCommand FilterCommand { get; private set; }
+        public RelayCommand CancelFilterCommand { get; private set; }
 
         public string AppTitle
         {   
@@ -51,6 +53,8 @@ namespace GestioneOrdini.Gui.ViewModel
             RitiratoCommand = new RelayCommand(Ritirato);
             AvvisatoCommand = new RelayCommand(Avvisato);
             AddMarcheCommand = new RelayCommand(AddMarche);
+            FilterCommand = new RelayCommand(Filter);
+            CancelFilterCommand = new RelayCommand(CancelFilter);
 
             //RigheOrdine = TestDataGenerator.CreateTestRigheOrdine();
             using (GestOrdiniDataContext db = new GestOrdiniDataContext())
@@ -215,5 +219,8 @@ namespace GestioneOrdini.Gui.ViewModel
                 RigheOrdine.Add(ro);
             }
         }
+
+        private void Filter() { }
+        private void CancelFilter() { }
     }
 }
