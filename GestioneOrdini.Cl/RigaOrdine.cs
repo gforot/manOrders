@@ -33,6 +33,12 @@ namespace GestioneOrdini.Cl
         [Column(Name = "Avvisato")]
         public int Avvisato { get; set; }
 
+        [Column(Name = "Ritirato")]
+        public int Ritirato { get; set; }
+
+        [Column(Name = "DataRitirato")]
+        public DateTime? DataRitirato { get; set; }
+
         [Column(Name = "DataAvvisato")]
         public DateTime? DataAvvisato { get; set; }
 
@@ -47,6 +53,8 @@ namespace GestioneOrdini.Cl
             DataArrivoPezzo = source.DataArrivoPezzo;
             Stato = source.Stato;
             DataAvvisato = source.DataAvvisato;
+            Ritirato = source.Ritirato;
+            DataRitirato = source.DataRitirato;
         }
     }
 

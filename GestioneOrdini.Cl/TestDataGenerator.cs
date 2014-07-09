@@ -16,6 +16,8 @@ namespace GestioneOrdini.Cl
                        {
                            Cliente="Andrea Rota",
                            Avvisato = 0,
+                           Ritirato = 0,
+                           DataRitirato = null,
                            DataArrivoPezzo = null,
                            DataAvvisato = null,
                            DataOrdine = DateTime.Now,
