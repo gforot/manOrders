@@ -23,6 +23,7 @@ namespace GestioneOrdini.Gui.ViewModel
     public class MainViewModel : ViewModelBase
     {
         public RelayCommand AddCommand { get; private set; }
+        public RelayCommand UpdateCommand { get; private set; }
 
         public string AppTitle
         {   
@@ -34,18 +35,26 @@ namespace GestioneOrdini.Gui.ViewModel
 
         public ObservableCollection<RigaOrdine> RigheOrdine { get; set; }
 
+        public object SelectedItem { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel()
         {
             AddCommand = new RelayCommand(Add);
+            UpdateCommand = new RelayCommand(Update);
 
             //RigheOrdine = TestDataGenerator.CreateTestRigheOrdine();
             using (GestOrdiniDataContext db = new GestOrdiniDataContext())
             {
                 UpdateRigheOrdineFromDb(db);
             }
+        }
+
+        private void Update()
+        {
+            
         }
 
         private void Add()

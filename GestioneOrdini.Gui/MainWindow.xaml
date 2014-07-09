@@ -23,7 +23,7 @@
             <TextBlock Text="{Binding AppTitle}" Style="{StaticResource titleStyle}"></TextBlock>
         </StackPanel>
         <StackPanel x:Name="lbPanel">
-            <DataGrid ItemsSource="{Binding RigheOrdine}" AutoGenerateColumns="False">
+            <DataGrid ItemsSource="{Binding RigheOrdine}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -38,16 +38,24 @@
                 </DataGrid.RowStyle>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Cliente" Binding="{Binding Cliente}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Descrizione" Binding="{Binding Descrizione}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Marca" Binding="{Binding Marca}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Tel" Binding="{Binding Telefono}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Data Ordine" Binding="{Binding DataOrdine, Converter={StaticResource datetimeToDateConverter}}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Data Avviso" Binding="{Binding DataAvvisato, Converter={StaticResource datetimeToDateConverter}}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Data Arrivo Pezzo" Binding="{Binding DataArrivoPezzo, Converter={StaticResource datetimeToDateConverter}}"></DataGridTextColumn>
-                    
-                    <DataGridCheckBoxColumn Header="Avvisato" IsThreeState="False" Binding="{Binding Avvisato, Converter={StaticResource avvisatoConverter}}" />
-                    
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Cliente" Binding="{Binding Cliente}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Descrizione" Binding="{Binding Descrizione}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Marca" Binding="{Binding Marca}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Tel" Binding="{Binding Telefono}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Data Ordine" Binding="{Binding DataOrdine, Converter={StaticResource datetimeToDateConverter}}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Data Avviso" Binding="{Binding DataAvvisato, Converter={StaticResource datetimeToDateConverter}}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Data Arrivo Pezzo" Binding="{Binding DataArrivoPezzo, Converter={StaticResource datetimeToDateConverter}}" IsReadOnly="True" />
+                    <DataGridCheckBoxColumn Header="Avvisato" IsThreeState="False" Binding="{Binding Avvisato, Converter={StaticResource avvisatoConverter}}" IsReadOnly="True" />
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding Path=DataContext.UpdateCommand,       
+ RelativeSource= {RelativeSource FindAncestor,
+  AncestorType={x:Type DataGrid}}}">Aggiorna</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
