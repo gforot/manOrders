@@ -16,7 +16,7 @@ namespace GestioneOrdini.Cl
         public GestOrdiniDataContext()
             : this(new SQLiteConnection(string.Format("Data Source={0}", _dbPath)))
         {
-
+            this.Log = Console.Out;
         }
 
         public GestOrdiniDataContext(SQLiteConnection connection)
@@ -29,6 +29,7 @@ namespace GestioneOrdini.Cl
         {
             try
             {
+                ro.Id = GetNextId();
                 this.RigheOrdine.InsertOnSubmit(ro);
                 this.SubmitChanges();
                 return true;
@@ -37,6 +38,16 @@ namespace GestioneOrdini.Cl
             {
                 return false;
             }
+        }
+
+        private int GetNextId()
+        {
+            List<RigaOrdine> rords = this.GetRigheOrdine();
+            if (rords.Count == 0)
+            {
+                return 1;
+            }
+            return rords.Max(rord => rord.Id) + 1;
         }
 
         public RigaOrdine GetRigaOrdine(int id)

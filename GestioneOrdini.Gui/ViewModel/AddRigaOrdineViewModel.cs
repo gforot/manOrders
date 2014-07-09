@@ -118,14 +118,16 @@ namespace GestioneOrdini.Gui.ViewModel
         {
             MessengerInstance.Send(new AddRigaMessage(AddRigaMessage.AddMessage, new RigaOrdine
                                                                   {
-                                                                    Id = 100,
                                                                     Cliente = Cliente,
                                                                     Descrizione = Descrizione,
                                                                     DataOrdine = DataOrdine,
                                                                     Stato = Stato,
                                                                     Marca = Marca,
-                                                                    Telefono = Telefono
+                                                                    Telefono = Telefono,
                                                                   }));
+
+
+
         }
 
     }

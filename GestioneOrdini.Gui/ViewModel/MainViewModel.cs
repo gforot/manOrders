@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Documents;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -31,7 +32,7 @@ namespace GestioneOrdini.Gui.ViewModel
             }
         }
 
-        public List<RigaOrdine> RigheOrdine { get; set; }
+        public ObservableCollection<RigaOrdine> RigheOrdine { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -43,7 +44,7 @@ namespace GestioneOrdini.Gui.ViewModel
             //RigheOrdine = TestDataGenerator.CreateTestRigheOrdine();
             using (GestOrdiniDataContext db = new GestOrdiniDataContext())
             {
-                RigheOrdine = db.GetRigheOrdine();
+                UpdateRigheOrdineFromDb(db);
             }
         }
 
@@ -56,8 +57,30 @@ namespace GestioneOrdini.Gui.ViewModel
             {
                 using (GestOrdiniDataContext db = new GestOrdiniDataContext())
                 {
-                    db.AddRigaOrdine(wnd.RigaOrdine);
+                    bool isOk = db.AddRigaOrdine(wnd.RigaOrdine);
+                    //se la aggiunta va a buon fine aggiorno
+                    if (isOk)
+                    {
+                        UpdateRigheOrdineFromDb(db);
+                    }
                 }
+            }
+        }
+
+        private void UpdateRigheOrdineFromDb(GestOrdiniDataContext db)
+        {
+            if (RigheOrdine == null)
+            {
+                RigheOrdine = new ObservableCollection<RigaOrdine>();
+            }
+            else
+            {
+                RigheOrdine.Clear();
+            }
+
+            foreach (var ro in db.GetRigheOrdine())
+            {
+                RigheOrdine.Add(ro);
             }
         }
     }
