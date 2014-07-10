@@ -40,7 +40,7 @@
             </StackPanel>
 
             <StackPanel>
-            <TextBlock>Marca</TextBlock>
+                <TextBlock>Marca</TextBlock>
                 <StackPanel Orientation="Horizontal">
                     <ComboBox Margin="5,3" DisplayMemberPath="Nome"  HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom" 
                     ItemsSource="{Binding Marche}" SelectedItem="{Binding SelectedMarca, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -50,8 +50,13 @@
                     </Button>
                 </StackPanel>
             </StackPanel>
-            
-            
+
+            <StackPanel>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Mostra Consegnati</TextBlock>
+                <CheckBox IsChecked="{Binding ShowDelivered, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            </StackPanel>
+
+
         </StackPanel>
         
         <StackPanel x:Name="lbPanel">

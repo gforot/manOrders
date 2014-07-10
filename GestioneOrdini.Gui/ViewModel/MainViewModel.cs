@@ -43,6 +43,22 @@ namespace GestioneOrdini.Gui.ViewModel
             }
         }
 
+        private const string _showDeliveredPrpName = "ShowDelivered";
+        private bool _showDelivered;
+        public bool ShowDelivered
+        {
+            get
+            {
+                return _showDelivered;
+            }
+            set
+            {
+                _showDelivered = value;
+                RaisePropertyChanged(_showDeliveredPrpName);
+                ApplyFilter();
+            }
+        }
+
         public ObservableCollection<RigaOrdine> RigheOrdine { get; set; }
 
         public ICollectionView RigheOrdineCollectionView { get; private set; }
@@ -88,6 +104,7 @@ namespace GestioneOrdini.Gui.ViewModel
         /// </summary>
         public MainViewModel()
         {
+            _showDelivered = false;
             AddCommand = new RelayCommand(Add);
             UpdateCommand = new RelayCommand(Update);
             RitiratoCommand = new RelayCommand(Ritirato);
@@ -108,6 +125,8 @@ namespace GestioneOrdini.Gui.ViewModel
             }
 
             RigheOrdineCollectionView = CollectionViewSource.GetDefaultView(RigheOrdine);
+
+            ApplyFilter();
         }
 
         private void Update()
@@ -229,7 +248,10 @@ namespace GestioneOrdini.Gui.ViewModel
 
         private void ApplyFilter()
         {
-            RigheOrdineCollectionView.Filter = FilterByMarcaAndCliente;
+            if (RigheOrdineCollectionView != null)
+            {
+                RigheOrdineCollectionView.Filter = FilterByMarcaAndCliente;
+            }
         }
 
         private bool FilterByMarcaAndCliente(object obj)
@@ -239,6 +261,13 @@ namespace GestioneOrdini.Gui.ViewModel
                 return true;
             }
             RigaOrdine ro = obj as RigaOrdine;
+
+            //se non devo mostrare i consegnati li scarto qui.
+            if ((ro.IsRitirato) && !ShowDelivered)
+            {
+                return false;
+            }
+
             return FilterByCliente(ro) && FilterByMarca(ro);
         }
 
