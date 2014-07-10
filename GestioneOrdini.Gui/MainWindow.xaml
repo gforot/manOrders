@@ -9,6 +9,7 @@
 
         <converters:DatetimeToDateConverter x:Key="datetimeToDateConverter" />
         <converters:IntToBoolConverter x:Key="intToBoolConverter" />
+        <converters:RigaToBackgroundConverter x:Key="rigaToBackgroundConverter"></converters:RigaToBackgroundConverter>
         
         <Style TargetType="TextBlock" x:Key="titleStyle">
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -25,18 +26,40 @@
         <StackPanel x:Name="titlePanel">
             <TextBlock Text="{Binding AppTitle}" Style="{StaticResource titleStyle}"></TextBlock>
         </StackPanel>
+        
+        <StackPanel x:Name="filtersPanel" Orientation="Horizontal">
+            <StackPanel>
+                <TextBlock>Cliente</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding FilterCliente, UpdateSourceTrigger=PropertyChanged}" Width="80"></TextBox>
+                    <Button Margin="5,3" HorizontalAlignment="Left" Width="16" Height="16" 
+            Command="{Binding RemoveClienteFilterCommand, Mode=OneWay}">
+                        <Image Width="10" Height="10" Source="images/delete.png" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel>
+            <TextBlock>Marca</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Margin="5,3" DisplayMemberPath="Nome"  HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom" 
+                    ItemsSource="{Binding Marche}" SelectedItem="{Binding SelectedMarca, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Margin="5,3" HorizontalAlignment="Left" Width="16" Height="16" 
+                    Command="{Binding RemoveMarcaFilterCommand, Mode=OneWay}">
+                        <Image Width="10" Height="10" Source="images/delete.png" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            
+            
+        </StackPanel>
+        
         <StackPanel x:Name="lbPanel">
-            <DataGrid ItemsSource="{Binding RigheOrdine}" CanUserAddRows="False" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}">
+            <DataGrid ItemsSource="{Binding RigheOrdineCollectionView}" CanUserAddRows="False" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Avvisato}" Value="1">
-                                <Setter Property="Background" Value="Yellow"></Setter>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Ritirato}" Value="1">
-                                <Setter Property="Background" Value="Green"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
+                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=Item,
+                Converter={StaticResource rigaToBackgroundConverter}}"/>
                     </Style>
                 </DataGrid.RowStyle>
 

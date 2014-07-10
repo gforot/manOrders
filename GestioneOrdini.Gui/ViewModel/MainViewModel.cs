@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Data;
 using System.Windows.Documents;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -30,6 +32,8 @@ namespace GestioneOrdini.Gui.ViewModel
         public RelayCommand AddMarcheCommand { get; private set; }
         public RelayCommand FilterCommand { get; private set; }
         public RelayCommand CancelFilterCommand { get; private set; }
+        public RelayCommand RemoveMarcaFilterCommand { get; private set; }
+        public RelayCommand RemoveClienteFilterCommand { get; private set; }
 
         public string AppTitle
         {   
@@ -41,7 +45,43 @@ namespace GestioneOrdini.Gui.ViewModel
 
         public ObservableCollection<RigaOrdine> RigheOrdine { get; set; }
 
+        public ICollectionView RigheOrdineCollectionView { get; private set; }
+
         public object SelectedItem { get; set; }
+
+        private const string _filterClientePrpName = "FilterCliente";
+        private string _filterCliente;
+        public string FilterCliente
+        {
+            get
+            {
+                return _filterCliente;
+            }
+            set
+            {
+                _filterCliente = value;
+                RaisePropertyChanged(_filterClientePrpName);
+                ApplyFilter();
+            }
+        }
+
+        private const string _selectedMarcaPrpName = "SelectedMarca";
+        private Marca _selectedMarca;
+        public Marca SelectedMarca
+        {
+            get
+            {
+                return _selectedMarca;
+            }
+            set
+            {
+                _selectedMarca = value;
+                RaisePropertyChanged(_selectedMarcaPrpName);
+                ApplyFilter();
+            }
+        }
+
+        public ObservableCollection<Marca> Marche { get; set; } 
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -55,12 +95,19 @@ namespace GestioneOrdini.Gui.ViewModel
             AddMarcheCommand = new RelayCommand(AddMarche);
             FilterCommand = new RelayCommand(Filter);
             CancelFilterCommand = new RelayCommand(CancelFilter);
+            RemoveMarcaFilterCommand = new RelayCommand(RemoveMarcaFilter);
+            RemoveClienteFilterCommand = new RelayCommand(RemoveClienteFilter);
 
             //RigheOrdine = TestDataGenerator.CreateTestRigheOrdine();
             using (GestOrdiniDataContext db = new GestOrdiniDataContext())
             {
                 UpdateRigheOrdineFromDb(db);
+
+                //todo: aggiornare Marche quando viene aggiunta una marca
+                Marche = new ObservableCollection<Marca>(db.GetMarche());
             }
+
+            RigheOrdineCollectionView = CollectionViewSource.GetDefaultView(RigheOrdine);
         }
 
         private void Update()
@@ -92,35 +139,12 @@ namespace GestioneOrdini.Gui.ViewModel
             if (SelectedItem == null) return;
             if (SelectedItem is RigaOrdine)
             {
-                RigaOrdine ro = SelectedItem as RigaOrdine;
-
                 using (GestOrdiniDataContext db = new GestOrdiniDataContext())
                 {
-                    RigaOrdine roInDb = db.GetRigaOrdine(ro.Id);
-                    if (roInDb != null)
-                    {
-                        //ho trovato la riga nel db. La aggiorno.
-                        roInDb.Ritirato = 1;
-                        roInDb.DataRitirato = System.DateTime.Now;
-
-                        bool res = db.UpdateRigaOrdine(roInDb);
-                        if (res)
-                        {
-                            db.SubmitChanges();
-                            UpdateRigheOrdineFromDb(db);
-                        }
-                        else
-                        {
-
-                        }
-                    }
-
-
+                    db.SetRitirato((SelectedItem as RigaOrdine).Id, true);
+                    UpdateRigheOrdineFromDb(db);
                 }
-
             }
-
-
         }
 
 
@@ -129,35 +153,12 @@ namespace GestioneOrdini.Gui.ViewModel
             if (SelectedItem == null) return;
             if (SelectedItem is RigaOrdine)
             {
-                RigaOrdine ro = SelectedItem as RigaOrdine;
-
                 using (GestOrdiniDataContext db = new GestOrdiniDataContext())
                 {
-                    RigaOrdine roInDb = db.GetRigaOrdine(ro.Id);
-                    if (roInDb != null)
-                    {
-                        //ho trovato la riga nel db. La aggiorno.
-                        roInDb.Avvisato = 1;
-                        roInDb.DataAvvisato = System.DateTime.Now;
-
-                        bool res = db.UpdateRigaOrdine(roInDb);
-                        if (res)
-                        {
-                            db.SubmitChanges();
-                            UpdateRigheOrdineFromDb(db);
-                        }
-                        else
-                        {
-
-                        }
-                    }
-
-
+                    db.SetAvvisato((SelectedItem as RigaOrdine).Id, true);
+                    UpdateRigheOrdineFromDb(db);
                 }
-
             }
-
-
         }
 
         private void Add()
@@ -199,6 +200,12 @@ namespace GestioneOrdini.Gui.ViewModel
                     {
                         db.AddMarca(new Marca() {Nome = marca});
                     }
+
+                    Marche.Clear();
+                    foreach (Marca marca in db.GetMarche())
+                    {
+                        Marche.Add(marca);
+                    }
                 }
             }
         }
@@ -218,6 +225,55 @@ namespace GestioneOrdini.Gui.ViewModel
             {
                 RigheOrdine.Add(ro);
             }
+        }
+
+        private void ApplyFilter()
+        {
+            RigheOrdineCollectionView.Filter = FilterByMarcaAndCliente;
+        }
+
+        private bool FilterByMarcaAndCliente(object obj)
+        {
+            if (!(obj is RigaOrdine))
+            {
+                return true;
+            }
+            RigaOrdine ro = obj as RigaOrdine;
+            return FilterByCliente(ro) && FilterByMarca(ro);
+        }
+
+        private bool FilterByCliente(RigaOrdine ro)
+        {
+            if (!string.IsNullOrEmpty(FilterCliente))
+            {
+                if (!ro.Cliente.Contains(FilterCliente))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool FilterByMarca(RigaOrdine ro)
+        {
+            if (SelectedMarca != null)
+            {
+                if (SelectedMarca.Nome != ro.Marca)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void RemoveMarcaFilter()
+        {
+            SelectedMarca = null;
+        }
+
+        private void RemoveClienteFilter()
+        {
+            FilterCliente = null;
         }
 
         private void Filter() { }

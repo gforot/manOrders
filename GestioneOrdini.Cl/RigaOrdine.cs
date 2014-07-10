@@ -42,6 +42,22 @@ namespace GestioneOrdini.Cl
         [Column(Name = "DataAvvisato")]
         public DateTime? DataAvvisato { get; set; }
 
+        public bool IsRitirato
+        {
+            get
+            {
+                return Ritirato == 1;
+            }
+        }
+
+        public bool IsAvvisato
+        {
+            get
+            {
+                return Avvisato == 1;
+            }
+        }
+
         public void CopyAllProperties(RigaOrdine source)
         {
             Avvisato = source.Avvisato;

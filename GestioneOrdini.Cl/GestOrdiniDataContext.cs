@@ -53,7 +53,7 @@ namespace GestioneOrdini.Cl
 
         public RigaOrdine GetRigaOrdine(int id)
         {
-            foreach (RigaOrdine ro in RigheOrdine)
+            foreach (RigaOrdine ro in GetRigheOrdine())
             {
                 if (ro.Id == id) return ro;
             }
@@ -83,6 +83,34 @@ namespace GestioneOrdini.Cl
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        public void SetAvvisato(int id, bool avvisato)
+        {
+            RigaOrdine original = RigheOrdine.Single(ro => ro.Id == id);
+            original.Avvisato = avvisato ? 1 : 0;
+            if (original.IsAvvisato)
+            {
+                original.DataAvvisato = DateTime.Now;
+            }
+            else
+            {
+                original.DataAvvisato = null;
+            }
+        }
+
+        public void SetRitirato(int id, bool ritirato)
+        {
+            RigaOrdine original = RigheOrdine.Single(ro => ro.Id == id);
+            original.Ritirato = ritirato ? 1 : 0;
+            if (original.IsRitirato)
+            {
+                original.DataRitirato = DateTime.Now;
+            }
+            else
+            {
+                original.DataRitirato = null;
             }
         }
 
