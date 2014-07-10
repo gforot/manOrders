@@ -30,7 +30,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel x:Name="titlePanel">
-            <TextBlock Text="PROVA" Style="{StaticResource titleStyle}"></TextBlock>
+            <TextBlock Text="{Binding AppTitle}" Style="{StaticResource titleStyle}"></TextBlock>
         </StackPanel>
         <StackPanel x:Name="filtersPanel" Orientation="Horizontal" Grid.Row="1">
             <StackPanel>
