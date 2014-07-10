@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Documents;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GestioneOrdini.Cl;
@@ -106,7 +107,7 @@ namespace GestioneOrdini.Gui.ViewModel
 
         public AddRigaOrdineViewModel()
         {
-            AddCommand = new RelayCommand(Add);
+            AddCommand = new RelayCommand(Add, () => CanAdd);
             CancelCommand = new RelayCommand(Cancel);
         }
 
@@ -158,6 +159,16 @@ namespace GestioneOrdini.Gui.ViewModel
                                                                     Marca = Marca.Nome,
                                                                     Telefono = Telefono,
                                                                   }));
+        }
+
+        private bool CanAdd
+        {
+            get
+            {
+                return (this.Marca != null) &&
+                    (!string.IsNullOrEmpty(this.Cliente)) &&
+                    (!string.IsNullOrEmpty(this.Descrizione));
+            }
         }
 
     }
