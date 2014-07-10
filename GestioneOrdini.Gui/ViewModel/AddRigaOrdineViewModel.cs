@@ -134,7 +134,6 @@ namespace GestioneOrdini.Gui.ViewModel
                 Cliente = App.CurrentRigaOrdine.Cliente;
                 Descrizione = App.CurrentRigaOrdine.Descrizione;
                 DataOrdine = App.CurrentRigaOrdine.DataOrdine;
-                Stato = App.CurrentRigaOrdine.Stato;
                 Telefono = App.CurrentRigaOrdine.Telefono;
                 _id = App.CurrentRigaOrdine.Id;
             }
@@ -155,7 +154,7 @@ namespace GestioneOrdini.Gui.ViewModel
                                                                     Cliente = Cliente,
                                                                     Descrizione = Descrizione,
                                                                     DataOrdine = DataOrdine,
-                                                                    Stato = Stato,
+
                                                                     Marca = Marca.Nome,
                                                                     Telefono = Telefono,
                                                                   }));

@@ -33,7 +33,7 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
-                <RowDefinition />
+
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80" />
@@ -43,18 +43,16 @@
             <TextBlock Text="Cliente" Grid.Row="0" Grid.Column="0" />
             <TextBlock Text="Descrizione" Grid.Column="0" Grid.Row="1" />
             <TextBlock Text="DataOrdine" Grid.Column="0" Grid.Row="2" />
-            <TextBlock Text="Stato" Grid.Column="0" Grid.Row="3" />
-            <TextBlock Text="Marca" Grid.Column="0" Grid.Row="4" />
-            <TextBlock Text="Telefono" Grid.Column="0" Grid.Row="5" />
+            <TextBlock Text="Marca" Grid.Column="0" Grid.Row="3" />
+            <TextBlock Text="Telefono" Grid.Column="0" Grid.Row="4" />
 
             <TextBox Text="{Binding Cliente, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" />
             <TextBox Text="{Binding Descrizione, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
             <DatePicker Grid.Column="1" Grid.Row="2" DisplayDate="{Binding DataOrdine}" />
-            <TextBox Text="{Binding Stato}" Grid.Column="1" Grid.Row="3" />
             <ComboBox ItemsSource="{Binding Path=Marche}"
                     DisplayMemberPath="Nome"
-                    SelectedValue="{Binding Path=Marca}" Grid.Column="1" Grid.Row="4" />
-            <TextBox Text="{Binding Telefono}" Grid.Column="1" Grid.Row="5" />
+                    SelectedValue="{Binding Path=Marca}" Grid.Column="1" Grid.Row="3" />
+            <TextBox Text="{Binding Telefono}" Grid.Column="1" Grid.Row="4" />
         </Grid>
         <StackPanel Orientation="Horizontal">
             <Button Content="Annulla" Command="{Binding CancelCommand}" />

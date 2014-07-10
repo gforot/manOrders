@@ -27,9 +27,6 @@ namespace GestioneOrdini.Cl
         [Column(Name = "DataArrivoPezzo")]
         public DateTime? DataArrivoPezzo { get; set; }
 
-        [Column(Name = "Stato")]
-        public int Stato { get; set; }
-
         [Column(Name = "Avvisato")]
         public int Avvisato { get; set; }
 
@@ -67,7 +64,6 @@ namespace GestioneOrdini.Cl
             Marca = source.Marca;
             DataOrdine = source.DataOrdine;
             DataArrivoPezzo = source.DataArrivoPezzo;
-            Stato = source.Stato;
             DataAvvisato = source.DataAvvisato;
             Ritirato = source.Ritirato;
             DataRitirato = source.DataRitirato;

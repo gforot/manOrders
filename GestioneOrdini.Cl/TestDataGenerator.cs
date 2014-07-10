@@ -22,7 +22,6 @@ namespace GestioneOrdini.Cl
                            DataAvvisato = null,
                            DataOrdine = DateTime.Now,
                            Descrizione = "staffa per cassone Nissan",
-                           Stato = 2,
                            Id = id++
                        },
                        new RigaOrdine()
@@ -33,7 +32,6 @@ namespace GestioneOrdini.Cl
                            DataAvvisato = null,
                            DataOrdine = DateTime.Now,
                            Descrizione = "Custodia cell",
-                           Stato = 3,
                            Id = id++
                        },
                        new RigaOrdine()
@@ -44,7 +42,7 @@ namespace GestioneOrdini.Cl
                            DataAvvisato = null,
                            DataOrdine = DateTime.Now.Subtract(new TimeSpan(5,0,0,0)),
                            Descrizione = "Custodia cell",
-                           Stato = 4,
+
                            Id = id
                        },
                    };
