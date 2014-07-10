@@ -22,12 +22,17 @@
             <Setter Property="Margin" Value="5" />
         </Style>
     </Window.Resources>
-    <StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <StackPanel x:Name="titlePanel">
-            <TextBlock Text="{Binding AppTitle}" Style="{StaticResource titleStyle}"></TextBlock>
+            <TextBlock Text="PROVA" Style="{StaticResource titleStyle}"></TextBlock>
         </StackPanel>
-        
-        <StackPanel x:Name="filtersPanel" Orientation="Horizontal">
+        <StackPanel x:Name="filtersPanel" Orientation="Horizontal" Grid.Row="1">
             <StackPanel>
                 <TextBlock>Cliente</TextBlock>
                 <StackPanel Orientation="Horizontal">
@@ -58,8 +63,7 @@
 
 
         </StackPanel>
-        
-        <StackPanel x:Name="lbPanel">
+        <StackPanel x:Name="datagridPanel" Grid.Row="2">
             <DataGrid ItemsSource="{Binding RigheOrdineCollectionView}" CanUserAddRows="False" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
@@ -115,11 +119,11 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-        <StackPanel x:Name="buttonsPanel" Orientation="Horizontal">
+        <StackPanel x:Name="buttonsPanel" Orientation="Horizontal" Grid.Row="3">
             <Button x:Name="addOrdine" Content="Nuovo" Command="{Binding AddCommand}" Style="{StaticResource btnStyle}"></Button>
             <Button x:Name="addMarche" Content="Aggiungi Marche" Command="{Binding AddMarcheCommand}" Style="{StaticResource btnStyle}"></Button>
             <Button x:Name="filtra" Content="Filtra" Command="{Binding FilterCommand}" Style="{StaticResource btnStyle}"></Button>
             <Button x:Name="annukllafiltra" Content="Annulla Filtro" Command="{Binding CancelFilterCommand}" Style="{StaticResource btnStyle}"></Button>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </Window>
