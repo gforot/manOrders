@@ -186,10 +186,10 @@ namespace GestioneOrdini.Gui.ViewModel
                                                                     Cliente = Cliente,
                                                                     Descrizione = Descrizione,
                                                                     DataOrdine = DataOrdine,
-                                                                    //Avvisato = Avvisato ? 1 : 0,
+                                                                    Avvisato = Avvisato ? 1 : 0,
                                                                     Marca = Marca.Nome,
                                                                     Telefono = Telefono,
-                                                                    //Ritirato = Ritirato ? 1 : 0,
+                                                                    Ritirato = Ritirato ? 1 : 0,
                                                                     Note = Note
                                                                   }));
         }

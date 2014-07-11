@@ -77,7 +77,8 @@ namespace GestioneOrdini.Cl
                 {
                     return false;
                 }
-                original.CopyAllProperties(rigaOrdine);
+               // original.CopyAllProperties(rigaOrdine);
+                int r = ExecuteCommand(string.Format("Update RigheOrdine set avvisato={1} where Id={0}" , rigaOrdine.Id, rigaOrdine.Avvisato));
                 return true;
             }
             catch (Exception)
