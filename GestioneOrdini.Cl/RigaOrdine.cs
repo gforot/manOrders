@@ -18,6 +18,9 @@ namespace GestioneOrdini.Cl
         [Column(Name = "Descrizione")]
         public string Descrizione { get; set; }
 
+        [Column(Name = "Note")]
+        public string Note { get; set; }
+
         [Column(Name = "Marca")]
         public string Marca { get; set; }
 
@@ -38,6 +41,7 @@ namespace GestioneOrdini.Cl
 
         [Column(Name = "DataAvvisato")]
         public DateTime? DataAvvisato { get; set; }
+
 
         public bool IsRitirato
         {
@@ -67,7 +71,9 @@ namespace GestioneOrdini.Cl
             DataAvvisato = source.DataAvvisato;
             Ritirato = source.Ritirato;
             DataRitirato = source.DataRitirato;
+            Note = source.Note;
         }
+
     }
 
 }

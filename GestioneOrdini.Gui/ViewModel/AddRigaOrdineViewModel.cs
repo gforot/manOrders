@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Documents;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GestioneOrdini.Cl;
@@ -43,6 +41,21 @@ namespace GestioneOrdini.Gui.ViewModel
             {
                 _marca = value;
                 RaisePropertyChanged("Marca");
+            }
+        }
+
+        private const string _notePrpName = "Note";
+        private string _note;
+        public string Note
+        {
+            get
+            {
+                return _note;
+            }
+            set
+            {
+                _note = value;
+                RaisePropertyChanged(_notePrpName);
             }
         }
 
@@ -91,17 +104,33 @@ namespace GestioneOrdini.Gui.ViewModel
             }
         }
 
-        private int _stato;
-        public int Stato
+        private const string _avvisatoPrpName="Avvisato";
+        private bool _avvisato;
+        public bool Avvisato
         {
             get
             {
-                return _stato;
+                return _avvisato;
             }
             set
             {
-                _stato = value;
-                RaisePropertyChanged("Stato");
+                _avvisato = value;
+                RaisePropertyChanged(_avvisatoPrpName);
+            }
+        }
+
+        private const string _ritiratoPrpName = "Ritirato";
+        private bool _ritirato;
+        public bool Ritirato
+        {
+            get
+            {
+                return _ritirato;
+            }
+            set
+            {
+                _ritirato = value;
+                RaisePropertyChanged(_ritiratoPrpName);
             }
         }
 
@@ -118,15 +147,16 @@ namespace GestioneOrdini.Gui.ViewModel
                 Marche = db.GetMarche();
             }
 
-            if (GestioneOrdini.Gui.App.CurrentRigaOrdine == null)
+            if (App.CurrentRigaOrdine == null)
             {
                 Cliente = string.Empty;
                 Marca = null;
                 Descrizione = string.Empty;
                 DataOrdine = DateTime.Now;
-                Stato = 1;
                 Telefono = string.Empty;
                 _id = -1;
+                Avvisato = false;
+                Ritirato = false;
             }
             else
             {
@@ -136,6 +166,8 @@ namespace GestioneOrdini.Gui.ViewModel
                 DataOrdine = App.CurrentRigaOrdine.DataOrdine;
                 Telefono = App.CurrentRigaOrdine.Telefono;
                 _id = App.CurrentRigaOrdine.Id;
+                Avvisato = App.CurrentRigaOrdine.Avvisato == 1;
+                Ritirato = App.CurrentRigaOrdine.Ritirato == 1;
             }
 
 
@@ -154,9 +186,11 @@ namespace GestioneOrdini.Gui.ViewModel
                                                                     Cliente = Cliente,
                                                                     Descrizione = Descrizione,
                                                                     DataOrdine = DataOrdine,
-
+                                                                    //Avvisato = Avvisato ? 1 : 0,
                                                                     Marca = Marca.Nome,
                                                                     Telefono = Telefono,
+                                                                    //Ritirato = Ritirato ? 1 : 0,
+                                                                    Note = Note
                                                                   }));
         }
 

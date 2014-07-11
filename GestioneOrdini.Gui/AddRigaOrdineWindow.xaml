@@ -33,7 +33,8 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
-
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80" />
@@ -45,6 +46,8 @@
             <TextBlock Text="DataOrdine" Grid.Column="0" Grid.Row="2" />
             <TextBlock Text="Marca" Grid.Column="0" Grid.Row="3" />
             <TextBlock Text="Telefono" Grid.Column="0" Grid.Row="4" />
+            <TextBlock Text="Avvisato" Grid.Column="0" Grid.Row="5" />
+            <TextBlock Text="Ritirato" Grid.Column="0" Grid.Row="6" />
 
             <TextBox Text="{Binding Cliente, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" />
             <TextBox Text="{Binding Descrizione, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
@@ -53,6 +56,9 @@
                     DisplayMemberPath="Nome"
                     SelectedValue="{Binding Path=Marca}" Grid.Column="1" Grid.Row="3" />
             <TextBox Text="{Binding Telefono}" Grid.Column="1" Grid.Row="4" />
+            <CheckBox IsChecked="{Binding Avvisato}" Grid.Column="1" Grid.Row="5" />
+            <CheckBox IsChecked="{Binding Ritirato}" Grid.Column="1" Grid.Row="6" />
+
         </Grid>
         <StackPanel Orientation="Horizontal">
             <Button Content="Annulla" Command="{Binding CancelCommand}" />

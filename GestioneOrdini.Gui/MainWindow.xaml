@@ -77,6 +77,7 @@
                     <DataGridTextColumn Header="Cliente" Binding="{Binding Cliente}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Descrizione" Binding="{Binding Descrizione}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Marca" Binding="{Binding Marca}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Note" Binding="{Binding Note}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Tel" Binding="{Binding Telefono}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Data Ordine" Binding="{Binding DataOrdine, Converter={StaticResource datetimeToDateConverter}}" IsReadOnly="True" />
                     <DataGridCheckBoxColumn Header="Avvisato" IsThreeState="False" Binding="{Binding Avvisato, Converter={StaticResource intToBoolConverter}}" IsReadOnly="True" />
